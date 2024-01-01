@@ -8,7 +8,7 @@ import { getCurrentUser } from "@/utils/session";
 import More from "./More";
 
 const getPosts = async () => {
-  const response = await fetch("http://localhost:3000/api/posts", {
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/posts`, {
     cache: "no-store"
   });
 

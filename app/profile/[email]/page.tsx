@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { FC } from "react";
 
 const getProfile = async (email: string) => {
-  const response = await fetch(`http://localhost:3000/api/profile/${email}`, {
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/profile/${email}`, {
     cache: "no-store",
   })
   if (!response) {
