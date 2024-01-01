@@ -1,19 +1,11 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 const CreatePost = () => {
   const [description, setDescription] = useState("");
@@ -21,7 +13,13 @@ const CreatePost = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("api/posts", { description });
+      const response = await fetch("/api/posts", { 
+        method: "POST",
+        body: JSON.stringify({ description }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+       });
 
       if (response.status === 200) {
         router.refresh();

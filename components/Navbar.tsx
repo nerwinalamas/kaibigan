@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/toggle";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import CreatePost from "./CreatePost";
@@ -9,20 +8,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
+import { useState } from "react";
+import Logout from "./Logout";
+import { ModeToggle } from "./Toggle";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
   const { data, status } = useSession();
-  const router = useRouter()
-
-  // console.log("data: ", data);
-  // console.log("status: ", status);
-
-  const handleLogout = () => { 
-    router.back();
-    signOut();
-   }
+  const router = useRouter();
 
   return (
     <div>
@@ -47,13 +43,27 @@ const Navbar = () => {
               </PopoverTrigger>
               <PopoverContent className="w-36 h-36 absolute right-0 top-5">
                 <div className="flex flex-col gap-2">
-                  <Link href="/profile">Profile</Link>
-                  <p
-                    className="cursor-pointer"
-                    onClick={(e: React.MouseEvent<HTMLInputElement>) => handleLogout()}
-                  >
-                    Logout
-                  </p>
+                  <Command>
+                    <CommandGroup>
+                      <Link href={`/profile/${data?.user?.email}`}>
+                        <CommandItem
+                          className="cursor-pointer"
+                          onSelect={() => setOpen(false)}
+                        >
+                          Profile
+                        </CommandItem>
+                      </Link>
+                      <CommandItem
+                        className="cursor-pointer"
+                        onSelect={() => {
+                          setOpen(false);
+                          router.refresh();
+                        }}
+                      >
+                        <Logout />
+                      </CommandItem>
+                    </CommandGroup>
+                  </Command>
                 </div>
               </PopoverContent>
             </Popover>
@@ -68,8 +78,8 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center gap-5">
               <CreatePost />
-              <Link href="/profile">Profile</Link>
-              <p className="cursor-pointer" onClick={(e: React.MouseEvent<HTMLInputElement>) => signOut()}>Logout</p>
+              <Link href={`/profile/${data?.user?.email}`}>Profile</Link>
+              <Logout />
               <ModeToggle />
             </div>
           )}

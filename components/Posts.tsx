@@ -1,30 +1,27 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { MessageCircle, MoreHorizontal, ThumbsUp } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
-import prisma from "@/utils/connect";
 import moment from "moment";
+import { getCurrentUser } from "@/utils/session";
+import More from "./More";
+
+const getPosts = async () => {
+  const response = await fetch("http://localhost:3000/api/posts", {
+    cache: "no-store"
+  });
+
+  if (!response) {
+    throw new Error("Cannot get all post");
+  }
+  const data = await response.json();
+  return data;
+};
 
 const Posts = async () => {
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      User: true,
-    },
-  });
+  const user = await getCurrentUser();
+  const posts = await getPosts();
 
   return (
     <div className="flex min-h-screen flex-col items-center gap-10">
@@ -34,7 +31,7 @@ const Posts = async () => {
             <CardHeader>
               <div className="flex justify-between">
                 <div className="flex gap-3">
-                  <Link href={`/profile/${post.User.id}`}>
+                  <Link href={`/profile/${post.userEmail}`}>
                     <Avatar className="cursor-pointer">
                       <AvatarImage src={post.User.image} alt={post.User.name} />
                       <AvatarFallback>
@@ -43,7 +40,7 @@ const Posts = async () => {
                     </Avatar>
                   </Link>
                   <div className="flex flex-col gap-1">
-                    <Link href={`/profile/${post.User.id}`}>
+                    <Link href={`/profile/${post.userEmail}`}>
                       <h1 className="text-sm cursor-pointer">
                         {post.User.name}
                       </h1>
@@ -55,17 +52,7 @@ const Posts = async () => {
                 </div>
 
                 <div className="relative">
-                  <Popover>
-                    <PopoverTrigger>
-                      <MoreHorizontal className="cursor-pointer text-gray-500" />
-                    </PopoverTrigger>
-                    <PopoverContent className="w-36 h-36 absolute right-1 top-1">
-                      <div className="flex flex-col gap-2">
-                        <Link href="/edit-post">Edit</Link>
-                        <p className="cursor-pointer">Delete</p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                  {post.User.email === user?.email && <More id={post.id} />}
                 </div>
               </div>
             </CardHeader>

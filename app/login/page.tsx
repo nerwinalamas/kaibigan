@@ -2,13 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { signIn, useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
   const { data, status } = useSession();
   const router = useRouter();
-
-  console.log(data, status);
+  
   if (status === "loading") {
     return (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -26,9 +26,15 @@ const Login = () => {
       <div>
         <Button
           onClick={() => signIn("google")}
-          className="w-80 lg:w-[500px] bg-[#e13f2a] font-bold text-white hover:bg-red-400"
+          className="w-80 h-12 lg:w-[400px] flex gap-5 hover:bg-opacity-20"
         >
-          Google Login
+          <Image 
+            src="/google.png"
+            alt="Google logo"
+            width={30}
+            height={30}
+          />
+          Sign in with Google
         </Button>
       </div>
     </div>
