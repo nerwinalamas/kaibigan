@@ -28,7 +28,7 @@ const EditPost: FC<IEditPost> = ({ params }) => {
       setDescription(data.description)
     }
     getPost(id);
-  }, [])
+  }, [id])
 
   const handleSubmit = async (id: string) => {
     try {
