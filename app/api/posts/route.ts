@@ -47,7 +47,6 @@ export async function POST(req: Request) {
           userEmail: email
         }
       })
-      console.log("Post created");
       return NextResponse.json(newPost, { status: 200});
     } catch(error) {
       console.log(error)
