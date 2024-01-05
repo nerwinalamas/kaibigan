@@ -7,7 +7,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { FC } from "react";
 import moment from "moment";
 import More from "./More";
 import Comment from "./Comment";

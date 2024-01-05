@@ -32,41 +32,42 @@ const Navbar = () => {
 
         {/* TOGGLE */}
         <div className="flex items-center gap-5 md:hidden relative">
-          <CreatePost />
-
           {status === "unauthenticated" ? (
             <Link href="/login">Login</Link>
           ) : (
-            <Popover>
-              <PopoverTrigger>
-                <Menu />
-              </PopoverTrigger>
-              <PopoverContent className="w-36 h-36 absolute right-0 top-5">
-                <div className="flex flex-col gap-2">
-                  <Command>
-                    <CommandGroup>
-                      <Link href={`/profile/${data?.user?.email}`}>
+            <div className="flex gap-5">
+              <CreatePost />
+              <Popover>
+                <PopoverTrigger>
+                  <Menu />
+                </PopoverTrigger>
+                <PopoverContent className="w-36 h-36 absolute right-0 top-5">
+                  <div className="flex flex-col gap-2">
+                    <Command>
+                      <CommandGroup>
+                        <Link href={`/profile/${data?.user?.email}`}>
+                          <CommandItem
+                            className="cursor-pointer"
+                            onSelect={() => setOpen(false)}
+                          >
+                            Profile
+                          </CommandItem>
+                        </Link>
                         <CommandItem
                           className="cursor-pointer"
-                          onSelect={() => setOpen(false)}
+                          onSelect={() => {
+                            setOpen(false);
+                            router.refresh();
+                          }}
                         >
-                          Profile
+                          <Logout />
                         </CommandItem>
-                      </Link>
-                      <CommandItem
-                        className="cursor-pointer"
-                        onSelect={() => {
-                          setOpen(false);
-                          router.refresh();
-                        }}
-                      >
-                        <Logout />
-                      </CommandItem>
-                    </CommandGroup>
-                  </Command>
-                </div>
-              </PopoverContent>
-            </Popover>
+                      </CommandGroup>
+                    </Command>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
           )}
 
           <ModeToggle />

@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import moment from "moment";
 import { getCurrentUser } from "@/utils/session";

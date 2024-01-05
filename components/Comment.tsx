@@ -6,13 +6,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Edit, MessageCircle, ThumbsUp } from "lucide-react";
+import { MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
 import moment from "moment";
 import CreateComment from "./CreateComment";
-import DeleteComment from "./DeleteComment";
 import { getCurrentUser } from "@/utils/session";
 import EditComment from "./EditComment";
 
@@ -167,22 +166,6 @@ const Comment = async ({
                           {comment.description}
                         </p>
                       </div>
-                      {/* <div className="px-3 flex justify-between">
-                        <span className="text-xs text-slate-500">
-                          {moment(comment.createdAt)
-                            .startOf("seconds")
-                            .fromNow()}
-                        </span>
-                        {comment.userEmail === user?.email &&
-                          <div className="flex items-center gap-2">
-                          <p className="text-xs cursor-pointer hover:underline text-green-600 font-semibold">
-                            <EditComment />
-                          </p>
-                          <p className="text-xs cursor-pointer hover:underline text-red-600 font-semibold">
-                            <DeleteComment id={comment.postId} commentId={comment.id} />
-                          </p>
-                        </div>}
-                      </div> */}
                       <EditComment  
                         createdAt={comment.createdAt}
                         commentUserEmail={comment.userEmail}
