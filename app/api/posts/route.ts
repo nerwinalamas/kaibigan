@@ -7,7 +7,9 @@ export const GET = async (req: Request) => {
     try {
         const posts = await prisma.post.findMany({
           include: {
-            User: true
+            User: true,
+            comments: true,
+            likeBy: true
           },
           orderBy: {
             createdAt: "desc",
@@ -16,7 +18,6 @@ export const GET = async (req: Request) => {
         if (!posts) {
           return NextResponse.json({ message: "Posts not found!" }, { status: 404 });
         }
-        console.log("Get all post");
         return NextResponse.json(posts, { status: 200 })
     } catch (error) {
         console.log(error)
@@ -49,6 +50,7 @@ export async function POST(req: Request) {
       console.log("Post created");
       return NextResponse.json(newPost, { status: 200});
     } catch(error) {
+      console.log(error)
       return NextResponse.json({ message: 'Something went wrong!'}, { status: 500 });
     }
   }

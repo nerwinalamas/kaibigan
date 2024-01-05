@@ -38,15 +38,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
+  id            String      @id @default(cuid()) @map("_id")
   name          String?
-  email         String    @unique
+  email         String      @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
   Comment       Comment[]
+  likedPost     LikedPost[]
 }
 
 model VerificationToken {
@@ -68,6 +69,7 @@ model Post {
   userEmail   String?
 
   comments Comment[]
+  likeBy   LikedPost[]
 }
 
 model Comment {
@@ -79,4 +81,13 @@ model Comment {
   postId      String?
   User        User?    @relation(fields: [userEmail], references: [email])
   userEmail   String?
+}
+
+model LikedPost {
+  id      String   @id @default(cuid()) @map("_id")
+  userEmail  String
+  postId  String
+  likedAt DateTime @default(now())
+  User    User     @relation(fields: [userEmail], references: [email])
+  Post    Post     @relation(fields: [postId], references: [id])
 }

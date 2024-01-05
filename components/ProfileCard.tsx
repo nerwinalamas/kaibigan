@@ -23,7 +23,7 @@ const ProfileCard: FC<IProfileCard> = ({ id, name, email, image }) => {
           </Avatar>
         </CardHeader>
         <CardContent className="text-sm">
-          <h1>{name}</h1>
+          <h1 className="font-semibold text-xl capitalize">{name}</h1>
           <p className="text-gray-500">{email}</p>
         </CardContent>
       </Card>

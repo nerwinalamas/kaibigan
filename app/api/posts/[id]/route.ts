@@ -9,13 +9,16 @@ export const GET = async (req: Request, { params } : { params: {id: string}}) =>
         const post = await prisma.post.findUnique({
             where:{
                 id
+            },
+            include: {
+                comments: true,
+                likeBy: true
             }
         })
 
         if (!post) {
             return NextResponse.json({ message: "Post not found!" }, { status: 404 });
         }
-        console.log("Get specific post");
         return NextResponse.json(post, { status: 200 })
     } catch (error) {
         console.log(error);
@@ -37,7 +40,6 @@ export const PUT = async (req: Request, { params } : { params : { id: string}}) 
             data: { description },
             where: { id }
         })
-        console.log("Update post");
         return NextResponse.json(updatePost, { status: 200})
     } catch (error) {
         console.log(error);
@@ -58,7 +60,6 @@ export const DELETE = async (req: Request, { params } : { params : { id: string 
         const deletePost = await prisma.post.delete({
             where: { id }
         })
-        console.log("Delete post");
         return NextResponse.json(deletePost, { status: 200})
     } catch (error) {
         console.log(error);
