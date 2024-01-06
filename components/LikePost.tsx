@@ -29,7 +29,7 @@ const LikePost = ({ postId, userEmail, like }: ILikePost) => {
       }
     };
     getIfLike(postId);
-  }, [postId]);
+  }, [postId, userEmail]);
 
   const handleLike = async (id: string) => {
     try {
