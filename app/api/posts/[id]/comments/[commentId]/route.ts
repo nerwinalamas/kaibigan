@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/utils/session";
 import { NextResponse } from "next/server";
+import prisma from "@/utils/connect";
 
 
 // DELETE COMMENT
@@ -12,7 +13,7 @@ export const DELETE = async (req: Request, { params } : { params : { commentId: 
 
     const commentId = params.commentId
     try {
-        const deleteComment = await prisma?.comment.delete({
+        const deleteComment = await prisma.comment.delete({
             where: { id: commentId }
         })
         return NextResponse.json(deleteComment, { status: 200})
@@ -32,7 +33,7 @@ export const PUT = async (req: Request, { params } : { params : { commentId: str
     const commentId = params.commentId
     const { description } = await req.json();
     try {
-        const updateComment = await prisma?.comment.update({
+        const updateComment = await prisma.comment.update({
             data: { description },
             where: { id: commentId }
         })
@@ -52,7 +53,7 @@ export const GET = async (req: Request, { params } : { params : { commentId: str
     }
 
     try {
-        const comment = await prisma?.comment.findUnique({
+        const comment = await prisma.comment.findUnique({
             where: {
                 id: commentId
             }

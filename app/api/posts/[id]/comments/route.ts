@@ -1,11 +1,12 @@
 import { getCurrentUser } from "@/utils/session";
 import { NextResponse } from "next/server"
+import prisma from "@/utils/connect";
 
 // GET ALL COMMENTS
 export const GET = async (req: Request, { params }: { params : { id: string }}) => {
     const postId = params.id
     try {
-        const comments = await prisma?.post.findUnique({
+        const comments = await prisma.post.findUnique({
             include: {
                 comments: { include: { User: true } },
                 User: true,
@@ -37,7 +38,7 @@ export const POST = async (req: Request, { params }: { params : { id: string }})
       return NextResponse.json({ message: 'Description is required' }, { status: 500 });
     }
     try {
-        const newComment = await prisma?.comment.create({
+        const newComment = await prisma.comment.create({
             data: {
               description, 
               userEmail: email,

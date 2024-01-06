@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server"
+import prisma from "@/utils/connect"
 
 // GET ALL POST OF A USER
 export const GET = async (req: Request, { params } : { params : { email : string}}) => {
     const email = params.email
     try {
-        const posts = await prisma?.post.findMany({
+        const posts = await prisma.post.findMany({
             where: {
                 userEmail: email
             },
