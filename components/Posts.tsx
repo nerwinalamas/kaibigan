@@ -103,7 +103,11 @@ const Posts = async () => {
             </CardContent>
             <Separator className="w-[90%] mx-auto mb-5" />
             <CardFooter className="flex gap-5">
-              <LikePost postId={post.id} userEmail={user?.email || undefined} like={post.like}/>
+              <LikePost
+                postId={post.id}
+                userEmail={user?.email || undefined}
+                like={post.like}
+              />
               <Comment
                 id={post.id}
                 email={post.userEmail}

@@ -141,7 +141,7 @@ const Comment = async ({
             <div className="mt-3 mb-5 flex flex-col gap-5">
               {post.comments.length > 0 ? (
                 post.comments?.map((comment: any) => (
-                  <div className="w-[100%] flex gap-5">
+                  <div className="w-[100%] flex gap-5" key={comment.id}>
                     <Link href={`/profile/${comment.User.email}`}>
                       <Avatar className="cursor-pointer">
                         <AvatarImage
