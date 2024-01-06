@@ -34,7 +34,7 @@ const EditComment = ({
       setDescription(data.description)
     }
     getComment(postId, commentId);
-  }, [postId])
+  }, [postId, commentId])
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
